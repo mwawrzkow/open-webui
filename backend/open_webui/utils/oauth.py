@@ -101,6 +101,10 @@ class OAuthManager:
                     claim_data = claim_data.get(nested_claim, {})
                 oauth_roles = claim_data if isinstance(claim_data, list) else None
 
+                # Support for non Multivalued claim
+                if not oauth_roles and isinstance(claim_data, str): 
+                    oauth_roles = [claim_data]
+
             # If any roles are found, check if they match the allowed or admin roles
             if oauth_roles:
                 # If role management is enabled, and matching roles are provided, use the roles
